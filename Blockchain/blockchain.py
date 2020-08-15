@@ -109,5 +109,15 @@ def get_chain():
                 'lenght':len(BLOCKCHAIN.chain)}
     return jsonify(response), 200
 
+#Fetch the chain validity
+@app.route('/get_chain', methods=['GET'])
+def is_valid():
+    is_valid = BLOCKCHAIN.is_chain_valid(BLOCKCHAIN.chain)
+    if is_valid:
+        response = {"Blockchain is in a valid state"}
+    else:
+        response = {"!!!ALERT!!! Blockchain is invalid !!!!"}
+    return jsonify(response), 200
+
 #Running the web API
 app.run(host='127.0.0.1', port=5005) #Change host to 0.0.0.0 if you want external access on blockchain to be mined.
