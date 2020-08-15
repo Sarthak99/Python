@@ -1,6 +1,6 @@
 #Creating a blockchain
 
-#Install flask: pip install Flask==0.12.2
+#Install flask: pip install Flask
 
 #Libraries for build the blocks and providing user interface
 import datetime
@@ -9,12 +9,16 @@ import json
 from flask import Flask, jsonify
 
 
-#Create the blockchain
+# =============================================================================
+# 1.Create the blockchain
+# =============================================================================
+
 class BlockChain:
 
     #Define the chain for the class and create an instance of it
     def __init__(self):
         self.chain = []
+        # Define the Genesis block with a hardcoded proof and '0' previous_hash
         self.create_block(proof=1, previous_hash='0')
 
 #define the block and it's attributes
