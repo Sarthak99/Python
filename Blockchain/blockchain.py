@@ -76,3 +76,38 @@ class BlockChain:
             previous_block = block
             block_index += 1
         return True
+
+# =============================================================================
+# 2.Mining the Blockchain
+# =============================================================================
+
+#Create the web API using Flask
+app = Flask(__name__)
+
+#Instantiate a blockchain
+BLOCKCHAIN = BlockChain()
+
+#Mining a new block
+@app.route('/mine_block', methods=['GET'])
+def mine_block():
+    previous_block = BLOCKCHAIN.get_previous_block()
+    previous_proof = previous_block['proof']    #Extract the previous proof in the chain
+    previous_hash = BLOCKCHAIN.hash(previous_block)  #Extract the previous hash for the new block
+    proof = BLOCKCHAIN.proof_of_work(previous_proof)
+    new_block = BLOCKCHAIN.create_block(proof, previous_hash)
+    response = {'messsage':'Block has been successfully mined!!',
+                'index': new_block['index'],
+                'timestamp':new_block['timestamp'],
+                'proof': new_block['proof'],
+                'previous_hash':new_block['previous_hash']}
+    return jsonify(response), 200
+
+#Fetch the entire block
+@app.route('/get_chain', methods=['GET'])
+def get_chain():
+    response = {'chain':BLOCKCHAIN.chain,
+                'lenght':len(BLOCKCHAIN.chain)}
+    return jsonify(response), 200
+
+#Running the web API
+app.run(host='127.0.0.1', port=5005) #Change host to 0.0.0.0 if you want external access on blockchain to be mined.
