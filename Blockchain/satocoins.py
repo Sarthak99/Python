@@ -132,6 +132,9 @@ class BlockChain:
 #Create the web API using Flask
 app = Flask(__name__)
 
+#Create an address for the node on port 5000
+node_address = str(uuid4().replace('-',''))
+
 #Instantiate a blockchain
 BLOCKCHAIN = BlockChain()
 
@@ -142,23 +145,36 @@ def mine_block():
     previous_proof = previous_block['proof']    #Extract the previous proof in the chain
     previous_hash = BLOCKCHAIN.hash(previous_block)  #Extract the previous hash for the new block
     proof = BLOCKCHAIN.proof_of_work(previous_proof)
+    BLOCKCHAIN.add_transactions(sender = node_address, receiver = 'Bill Gates', amount = 10)
     new_block = BLOCKCHAIN.create_block(proof, previous_hash)
     response = {'messsage':'Block has been successfully mined!!',
                 'index': new_block['index'],
                 'timestamp':new_block['timestamp'],
                 'proof': new_block['proof'],
-                'previous_hash':new_block['previous_hash']}
+                'previous_hash':new_block['previous_hash'],
+                'transactions':new_block['transactions']}
     return jsonify(response), 200
 
-#Fetch the entire block
+#Fetch the entire chain
 @app.route('/get_chain', methods=['GET'])
 def get_chain():
     response = {'chain':BLOCKCHAIN.chain,
                 'length':len(BLOCKCHAIN.chain)}
     return jsonify(response), 200
 
+#Add a new transaction to the blockchain
+def add_transactions_to_block():
+    json =request.json()
+    transaction_keys = ['sender','receiver','amount']
+    if not all(key in json for key in transaction_keys):
+        return 'Some elements of the transasctions are missing.', 400
+    index = BLOCKCHAIN.add_transactions(sender = json['sender'],
+                                        receiver = json['receiver'],
+                                        amount = json['amount'])
+    response = {'message':f'transaction has been created and will be added to block{index}'}
+
 #Fetch the chain validity
-@app.route('/get_chain', methods=['GET'])
+@app.route('/is_valid', methods=['GET'])
 def is_valid():
     is_valid = BLOCKCHAIN.is_chain_valid(BLOCKCHAIN.chain)
     if is_valid:
