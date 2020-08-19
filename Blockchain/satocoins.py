@@ -6,10 +6,11 @@
 import datetime
 import hashlib
 import json
-from flask import Flask, jsonify, request
-import requests
 from uuid import uuid4
 from urllib.parse import urlparse
+from flask import Flask, jsonify, request
+import requests
+
 
 
 # =============================================================================
@@ -130,22 +131,22 @@ class BlockChain:
 # =============================================================================
 
 #Create the web API using Flask
-app = Flask(__name__)
+APP = Flask(__name__)
 
 #Create an address for the node on port 5000
-node_address = str(uuid4().replace('-',''))
+NODE_ADDRESS = str(uuid4()).replace('-', '')
 
 #Instantiate a blockchain
 BLOCKCHAIN = BlockChain()
 
 #Mining a new block
-@app.route('/mine_block', methods=['GET'])
+@APP.route('/mine_block', methods=['GET'])
 def mine_block():
     previous_block = BLOCKCHAIN.get_previous_block()
     previous_proof = previous_block['proof']    #Extract the previous proof in the chain
     previous_hash = BLOCKCHAIN.hash(previous_block)  #Extract the previous hash for the new block
     proof = BLOCKCHAIN.proof_of_work(previous_proof)
-    BLOCKCHAIN.add_transactions(sender = node_address, receiver = 'Bill Gates', amount = 10)
+    BLOCKCHAIN.add_transactions(sender=NODE_ADDRESS, receiver='Bill Gates', amount=10)
     new_block = BLOCKCHAIN.create_block(proof, previous_hash)
     response = {'messsage':'Block has been successfully mined!!',
                 'index': new_block['index'],
@@ -156,7 +157,7 @@ def mine_block():
     return jsonify(response), 200
 
 #Fetch the entire chain
-@app.route('/get_chain', methods=['GET'])
+@APP.route('/get_chain', methods=['GET'])
 def get_chain():
     response = {'chain':BLOCKCHAIN.chain,
                 'length':len(BLOCKCHAIN.chain)}
@@ -164,17 +165,18 @@ def get_chain():
 
 #Add a new transaction to the blockchain
 def add_transactions_to_block():
-    json =request.json()
-    transaction_keys = ['sender','receiver','amount']
+    json = request.json()
+    transaction_keys = ['sender', 'receiver', 'amount']
     if not all(key in json for key in transaction_keys):
         return 'Some elements of the transasctions are missing.', 400
-    index = BLOCKCHAIN.add_transactions(sender = json['sender'],
-                                        receiver = json['receiver'],
-                                        amount = json['amount'])
+    index = BLOCKCHAIN.add_transactions(sender=json['sender'],
+                                        receiver=json['receiver'],
+                                        amount=json['amount'])
     response = {'message':f'transaction has been created and will be added to block{index}'}
+    return jsonify(response), 201
 
 #Fetch the chain validity
-@app.route('/is_valid', methods=['GET'])
+@APP.route('/is_valid', methods=['GET'])
 def is_valid():
     is_valid = BLOCKCHAIN.is_chain_valid(BLOCKCHAIN.chain)
     if is_valid:
@@ -183,6 +185,34 @@ def is_valid():
         response = {"!!!ALERT!!! Blockchain is invalid !!!!"}
     return jsonify(response), 200
 
+# =============================================================================
+# 3.Decentralizing the Blockchain
+# =============================================================================
+
+#Connecting to new nodes
+@APP.route('/connect_node', methods=['POST'])
+def connect_node():
+    json = request.get_json()
+    nodes = json.get('nodes')
+    if nodes is None:
+        return "No Nodes", 400
+    for node in nodes:
+        BLOCKCHAIN.add_nodes(node)
+    response = {'message':'All the nodes are now connected. The satocoin Blockchain now contains following nodes:',
+                'total_nodes':list(BLOCKCHAIN.nodes)}
+    return jsonify(response), 201
+
+@APP.route('replace_chain', methods=['GET'])
+def replace_chain():
+    is_chain_replaced = BLOCKCHAIN.replace_chain()
+    if is_chain_replaced:
+        repsonse = {'message:':'The nodes were out of sync.The chain was replacedby the longest chain',
+                    'new_chain':BLOCKCHAIN.chain}
+    else:
+        repsonse = {'message:':'Current chain is the longest.No replacement necessary.',
+                    'current_chain':BLOCKCHAIN.chain}
+    return jsonify(repsonse), 200
+
 #Running the web API
 #Change host to 0.0.0.0 if you want external access on blockchain to be mined.
-app.run(host='127.0.0.1', port=5005)
+APP.run(host='127.0.0.1', port=5005)
