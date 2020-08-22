@@ -75,7 +75,7 @@ class BlockChain:
         block_index = 1
         while block_index < len(chain):
             block = chain[block_index]
-            if block['previous_hash'] != self.hash(previous_block):
+            if block['previous_hash'] != self.hash(block):
                 return False
             previous_proof = previous_block['proof']
             proof = block['proof']
@@ -117,7 +117,7 @@ class BlockChain:
             length = response.json()['length']
             chain = response.json()['chain']
             # verify the length of chain with self chain and the validity of the node chain
-            if length > max_length and self.is_chain_valid(chain):
+            if length > max_length and self.is_chain_valid(longest_chain):
                 max_length = length
                 longest_chain = chain
         # If the longest chain has been updated in the network, replace self chain with the longest chain
@@ -164,9 +164,8 @@ def get_chain():
     return jsonify(response), 200
 
 #Add a new transaction to the blockchain
-@APP.route('/add_transaction', methods = ['POST'])
 def add_transactions_to_block():
-    json = request.get_json()
+    json = request.json()
     transaction_keys = ['sender', 'receiver', 'amount']
     if not all(key in json for key in transaction_keys):
         return 'Some elements of the transasctions are missing.', 400
