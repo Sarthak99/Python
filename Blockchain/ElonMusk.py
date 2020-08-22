@@ -71,19 +71,24 @@ class BlockChain:
 
 # Verify every link in the chain is valid and the current block has a valid proof.
     def is_chain_valid(self, chain):
+        print("called icv")
         previous_block = chain[0]
-        block_index = 1
+        block_index = 1        
         while block_index < len(chain):
+            print("start while")
             block = chain[block_index]
             if block['previous_hash'] != self.hash(previous_block):
+                print("chain is invalid1")
                 return False
             previous_proof = previous_block['proof']
             proof = block['proof']
             hash_operation = hashlib.sha256(str(proof**2 - previous_proof**2).encode()).hexdigest()
             if hash_operation[:4] != '0000':
+                print("chain is invalid2")
                 return False
             previous_block = block
             block_index += 1
+        print("chain is valid")
         return True
 
 # Create a new method to add crypto transactions to a block
@@ -111,11 +116,13 @@ class BlockChain:
         network = self.nodes
         longest_chain = None
         max_length = len(self.chain)
+        print("self_length:", max_length)
         for node in network:
             # Get the response of each chain from all nodes in the network by making a get request on /get_chain
             response = requests.get(f'http://{node}/get_chain')
             length = response.json()['length']
             chain = response.json()['chain']
+            print("node:", node, "node_length:", length)
             # verify the length of chain with self chain and the validity of the node chain
             if length > max_length and self.is_chain_valid(chain):
                 max_length = length
@@ -146,7 +153,7 @@ def mine_block():
     previous_proof = previous_block['proof']    #Extract the previous proof in the chain
     previous_hash = BLOCKCHAIN.hash(previous_block)  #Extract the previous hash for the new block
     proof = BLOCKCHAIN.proof_of_work(previous_proof)
-    BLOCKCHAIN.add_transactions(sender=NODE_ADDRESS, receiver='Bill Gates', amount=10)
+    BLOCKCHAIN.add_transactions(sender=NODE_ADDRESS, receiver='Elon Musk', amount=10)
     new_block = BLOCKCHAIN.create_block(proof, previous_hash)
     response = {'messsage':'Block has been successfully mined!!',
                 'index': new_block['index'],
@@ -181,9 +188,9 @@ def add_transactions_to_block():
 def is_valid():
     is_valid = BLOCKCHAIN.is_chain_valid(BLOCKCHAIN.chain)
     if is_valid:
-        response = {"Blockchain is in a valid state"}
+        response = {'message':'Blockchain is in a valid state'}
     else:
-        response = {"!!!ALERT!!! Blockchain is invalid !!!!"}
+        response = {'message':'!!!ALERT!!! Blockchain is invalid !!!!'}
     return jsonify(response), 200
 
 # =============================================================================
@@ -203,7 +210,7 @@ def connect_node():
                 'total_nodes':list(BLOCKCHAIN.nodes)}
     return jsonify(response), 201
 
-@APP.route('replace_chain', methods=['GET'])
+@APP.route('/replace_chain', methods=['GET'])
 def replace_chain():
     is_chain_replaced = BLOCKCHAIN.replace_chain()
     if is_chain_replaced:
@@ -216,4 +223,4 @@ def replace_chain():
 
 #Running the web API
 #Change host to 0.0.0.0 if you want external access on blockchain to be mined.
-APP.run(host='127.0.0.1', port=5005)
+APP.run(host='127.0.0.1', port=5006)

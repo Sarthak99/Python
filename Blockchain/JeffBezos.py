@@ -71,6 +71,7 @@ class BlockChain:
 
 # Verify every link in the chain is valid and the current block has a valid proof.
     def is_chain_valid(self, chain):
+        print("call at is is_chain_valid:", len(chain))
         previous_block = chain[0]
         block_index = 1
         while block_index < len(chain):
@@ -146,7 +147,7 @@ def mine_block():
     previous_proof = previous_block['proof']    #Extract the previous proof in the chain
     previous_hash = BLOCKCHAIN.hash(previous_block)  #Extract the previous hash for the new block
     proof = BLOCKCHAIN.proof_of_work(previous_proof)
-    BLOCKCHAIN.add_transactions(sender=NODE_ADDRESS, receiver='Bill Gates', amount=10)
+    BLOCKCHAIN.add_transactions(sender=NODE_ADDRESS, receiver='Jeff Bezos', amount=10)
     new_block = BLOCKCHAIN.create_block(proof, previous_hash)
     response = {'messsage':'Block has been successfully mined!!',
                 'index': new_block['index'],
@@ -181,9 +182,9 @@ def add_transactions_to_block():
 def is_valid():
     is_valid = BLOCKCHAIN.is_chain_valid(BLOCKCHAIN.chain)
     if is_valid:
-        response = {"Blockchain is in a valid state"}
+        response = {'message':'Blockchain is in a valid state'}
     else:
-        response = {"!!!ALERT!!! Blockchain is invalid !!!!"}
+        response = {'message':'!!!ALERT!!! Blockchain is invalid !!!!'}
     return jsonify(response), 200
 
 # =============================================================================
@@ -203,7 +204,7 @@ def connect_node():
                 'total_nodes':list(BLOCKCHAIN.nodes)}
     return jsonify(response), 201
 
-@APP.route('replace_chain', methods=['GET'])
+@APP.route('/replace_chain', methods=['GET'])
 def replace_chain():
     is_chain_replaced = BLOCKCHAIN.replace_chain()
     if is_chain_replaced:
@@ -216,4 +217,4 @@ def replace_chain():
 
 #Running the web API
 #Change host to 0.0.0.0 if you want external access on blockchain to be mined.
-APP.run(host='127.0.0.1', port=5005)
+APP.run(host='127.0.0.1', port=5007)
