@@ -1,5 +1,5 @@
 **Welcome to the Blockchain project !!**  
-This project has the basic components of [building a blockchain in python](https://github.com/Sarthak99/Python/blob/master/Blockchain/blockchain.py), [creating an hypothetical cryptocurrency](https://github.com/Sarthak99/Python/blob/master/Blockchain/satocoins.py) and [smart contracts]() in a blockchain.
+This project has the basic components of [building a blockchain](https://github.com/Sarthak99/Python/blob/master/Blockchain/blockchain.py)  in python, creating an [hypothetical cryptocurrency](https://github.com/Sarthak99/Python/blob/master/Blockchain/satocoins.py) and [smart contracts]() in a blockchain.
 
 
 ### Build a basic blockchain
