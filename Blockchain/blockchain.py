@@ -110,7 +110,7 @@ def get_chain():
     return jsonify(response), 200
 
 #Fetch the chain validity
-@app.route('/get_chain', methods=['GET'])
+@app.route('/is_valid', methods=['GET'])
 def is_valid():
     is_valid = BLOCKCHAIN.is_chain_valid(BLOCKCHAIN.chain)
     if is_valid:
