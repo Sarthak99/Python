@@ -4,6 +4,7 @@ This project has the basic components of [building a blockchain](https://github.
 
 ### Build a basic blockchain
 Below are some the code fragments to demonstrate the implementation of few important parts. The entire blockchain has been implemented in python and the interfacing has been done by flask framework. The [imports](https://github.com/Sarthak99/Python/blob/f98622e1be38546e80cc77894106311cb7f2af9f/Blockchain/blockchain.py#L6-L9) defined are necessary for implementing the APIs and hashing algo.  
+***  
 [**create_block**](https://github.com/Sarthak99/Python/blob/b502d6c0ccdaba3cbabb81c9db9d59248ba0af22/Blockchain/blockchain.py#L36-L39) will define the structure of a basic block
 ```
 block = {'index': len(self.chain)+1,
