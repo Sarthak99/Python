@@ -58,10 +58,24 @@ An hypothetical cryptocurrency by the name "satocoins" has been demonstrated her
   * [_/add_transaction_](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L167-L177) is a POST implentation that will add the transaction into the mempool. This would still need to be mined using _/mine_block_ to be confirmed as a data in the blockchain.
   * [_/connect_node_](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L194-L204) is a POST call to add new peers into the network.
   * [_/replace_chain_](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L206-L215) is a call to update the longest chain in the network.  
- 
-
-
-
+  
+***Demonstration***  
+To simulate this crypto implementation we need to create 3 copies of the code and run them in parallel. This would simulate as 3 different users of the network.  
+Next we would be changing the below snippets to treat them as [different users](https://github.com/Sarthak99/Python/tree/master/Blockchain/DemoObjects).
+* [running port](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L219) to something unqiue to indicate as a new node in the network.  
+* [miner identity]https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L149) to award tokens to the miner of a block.  
+Once the above changes have been made, run the 3 python files in IDE or through command line. For ease of use and better visual [POSTMAN](https://www.postman.com/) can be used for the APIs. The steps of running through the demo can be viewed [here]().
+Steps:  
+BG ==> calls (GET) /get_chain ==> returns a blockchain with only the genesis block.  
+BG ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
+EM ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
+JB ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
+BG ==> calls (GET) /mine_block ==> to mine a new block with just a self trx.  
+EM ==> calls (GET) /get_chain ==> returns still the old chain with genesis block.  
+EM ==> calls (GET) /replace_chain ==> updates the chain to the new chain from BG.
+JB ==> calls (GET) /replace_chain ==> updates the chain to the new chain from BG.
+EM ==> calls (POST) /add_transaction ==> creates a trx from EM to JB for 10000 satocoins.
+EM ==> calls (GET) /mine_block ==> adds the trx and the mining reward to a latest block.
 
 
 **!!_Documentation in progress_!!**   
