@@ -34,5 +34,35 @@ The [endpoints/interfaces](https://github.com/Sarthak99/Python/blob/f98622e1be38
 * _/is_valid_ will verify if the entire chain, blocks and the cryptographical links are valid.
 ***  
 
+### Create a crytpocurrency
+To build a crypto, we need a minimal valid blockchain as an underlying implementation. Next we would create some transactions like sending tokens between different users. Each of these trx would come with some mining rewards in terms of the same crypto for the miner. The most important implementation of a crypto is to make it a [decentralized network](https://en.wikipedia.org/wiki/Decentralization) with P2P communications.  
+An hypothetical cryptocurrency by the name "satocoins" has been demonstrated here. Also here I will illustrate how some of the tech elites such as Bill Gates, Elon Musk and Jeff Bezos would be transacting these crypto among themselves. The actual implementation can be found [here](https://github.com/Sarthak99/Python/blob/master/Blockchain/satocoins.py).  Apart from the above implemented blockchain, let'sgo through some of the extra fragments of the crypto.  
+* [add_transaction](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L90-L98) method adds some transcations to the mempool. These are the transcations that need to be mined to the blockchain later to be confirmed as a completed trx. Transaction template is listed [here](https://github.com/Sarthak99/Python/blob/master/Blockchain/templates/transaction_template.json).  A transaction to be posted would look like this.   
+``` 
+ {  
+  "sender":"Bill Gates",  
+  "receiver":"Elon Musk",  
+  "amount":10000  
+ }  
+```  
+* [add_node](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L100-L103) method is responsible for adding new users into the P2P network.[Node template.](https://github.com/Sarthak99/Python/blob/master/Blockchain/templates/nodes_template.json)  
+```
+{  
+ "nodes":["http://127.0.70.1:5005",  
+          "http://127.0.0.1:5006",  
+          "http://127.0.0.1:5007"]  
+}
+```
+* [replace_chain](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L105-L127) method is one of the most important one in the way that this implements the consensus protocol in the blockchain and helps maintain an integrity of the data among peers in the network by the basic rule of "longest valid" chain. This GET interface can be called at any point in time by the user to make sure that their chain are always up-to-date.  
+* The endpoints/interfaces for crypto are as below:
+  * [_/add_transaction_](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L167-L177) is a POST implentation that will add the transaction into the mempool. This would still need to be mined using _/mine_block_ to be confirmed as a data in the blockchain.
+  * [_/connect_node_](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L194-L204) is a POST call to add new peers into the network.
+  * [_/replace_chain_](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L206-L215) is a call to update the longest chain in the network.  
+ 
+
+
+
+
+
 **!!_Documentation in progress_!!**   
 <img src = "http://horticulture.tg.nic.in/img/work-in-progress-wip.jpg" width=220 height=200>
