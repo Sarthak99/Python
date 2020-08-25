@@ -21,6 +21,7 @@ The [**proof**](https://github.com/Sarthak99/Python/blob/b502d6c0ccdaba3cbabb81c
 ```  hash_operation = hashlib.sha256(str(new_proof**2 - previous_proof**2).encode()).hexdigest()  ```  
 The above operation of ```new_proof**2 - previous**2``` is the puzzle miners have to solve and once a value of the proof is obtained, it will be verified against the target set to find the [golden nonce](https://www.blockchain-council.org/blockchain/what-is-a-golden-nonce-and-what-is-its-usage-in-blockchain/).  
 The proof in its arithmetical form is actually converted to a 64-hexa digit value by passing through a SHA256 generator. The code ```if hash_operation[:4] == '0000':``` is the hypothetical target defined here for golden nonce and the hash value will be compared against this.  
+***  
 The next part would be to verify that the chain to which the block is being mined is a valid one. The method [is_chain_valid](https://github.com/Sarthak99/Python/blob/b502d6c0ccdaba3cbabb81c9db9d59248ba0af22/Blockchain/blockchain.py#L64-L78) will do that verification by a two-step process:  
 * verify the cryptographical link is a valid one i.e. the _previous_hash_ of the current block is equal to the actual hash of the previous  
 ```if block['previous_hash'] != self.hash(previous_block):```  
