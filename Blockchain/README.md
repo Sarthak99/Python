@@ -72,11 +72,15 @@ EM ==> calls (POST) /connect_node with data (excluding self node) ==> to add pee
 JB ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
 BG ==> calls (GET) /mine_block ==> to mine a new block with just a self trx.  
 EM ==> calls (GET) /get_chain ==> returns still the old chain with genesis block.  
-EM ==> calls (GET) /replace_chain ==> updates the chain to the new chain from BG.
-JB ==> calls (GET) /replace_chain ==> updates the chain to the new chain from BG.
-EM ==> calls (POST) /add_transaction ==> creates a trx from EM to JB for 10000 satocoins.
-EM ==> calls (GET) /mine_block ==> adds the trx and the mining reward to a latest block.
-
+EM ==> calls (GET) /replace_chain ==> updates the chain to the new chain from BG.  
+JB ==> calls (GET) /replace_chain ==> updates the chain to the new chain from BG.  
+EM ==> calls (POST) /add_transaction ==> creates a trx from EM to JB for 10000 satocoins.  
+EM ==> calls (GET) /mine_block ==> adds the trx and the mining reward to a latest block.  
+JB ==> calls (GET) /replace_chain ==> updates the chain to the new chain from EM.  
+JB ==> calls (POST) /add_transaction ==> creates a trx from JB to BG for 100000 satocoins.  
+JB ==> calls (GET) /mine_block ==> adds the trx and the mining reward to a latest block.  
+BG ==> calls (GET) /replace_chain ==> updates the chain to the new chain from JB.  
+EM ==> calls (GET) /replace_chain ==> updates the chain to the new chain from JB.  
 
 **!!_Documentation in progress_!!**   
 <img src = "http://horticulture.tg.nic.in/img/work-in-progress-wip.jpg" width=220 height=200>
