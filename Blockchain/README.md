@@ -66,21 +66,21 @@ Next we would be changing the below snippets to treat them as [different users](
 * [miner identity]https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L149) to award tokens to the miner of a block.  
 Once the above changes have been made, run the 3 python files in IDE or through command line. For ease of use and better visual [POSTMAN](https://www.postman.com/) can be used for the APIs. The steps of running through the demo can be viewed [here]().
 Steps:  
-BG ==> calls (GET) /get_chain ==> returns a blockchain with only the genesis block.  
-BG ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
-EM ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
-JB ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
-BG ==> calls (GET) /mine_block ==> to mine a new block with just a self trx.  
-EM ==> calls (GET) /get_chain ==> returns still the old chain with genesis block.  
-EM ==> calls (GET) /replace_chain ==> updates the chain to the new chain from BG.  
-JB ==> calls (GET) /replace_chain ==> updates the chain to the new chain from BG.  
-EM ==> calls (POST) /add_transaction ==> creates a trx from EM to JB for 10000 satocoins.  
-EM ==> calls (GET) /mine_block ==> adds the trx and the mining reward to a latest block.  
-JB ==> calls (GET) /replace_chain ==> updates the chain to the new chain from EM.  
-JB ==> calls (POST) /add_transaction ==> creates a trx from JB to BG for 100000 satocoins.  
-JB ==> calls (GET) /mine_block ==> adds the trx and the mining reward to a latest block.  
-BG ==> calls (GET) /replace_chain ==> updates the chain to the new chain from JB.  
-EM ==> calls (GET) /replace_chain ==> updates the chain to the new chain from JB.  
+1. BG ==> calls (GET) /get_chain ==> returns a blockchain with only the genesis block.  
+2. BG ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
+3. EM ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
+4. JB ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
+5. BG ==> calls (GET) /mine_block ==> to mine a new block with just a self trx.  
+6. EM ==> calls (GET) /get_chain ==> returns still the old chain with genesis block.  
+7. EM ==> calls (GET) /replace_chain ==> updates the chain to the new chain from BG.  
+8. JB ==> calls (GET) /replace_chain ==> updates the chain to the new chain from BG.  
+9. EM ==> calls (POST) /add_transaction ==> creates a trx from EM to JB for 10000 satocoins.  
+10. EM ==> calls (GET) /mine_block ==> adds the trx and the mining reward to a latest block.  
+11. JB ==> calls (GET) /replace_chain ==> updates the chain to the new chain from EM.  
+12. JB ==> calls (POST) /add_transaction ==> creates a trx from JB to BG for 100000 satocoins.  
+13. JB ==> calls (GET) /mine_block ==> adds the trx and the mining reward to a latest block.  
+14. BG ==> calls (GET) /replace_chain ==> updates the chain to the new chain from JB.  
+15. EM ==> calls (GET) /replace_chain ==> updates the chain to the new chain from JB.  
 
 **!!_Documentation in progress_!!**   
 <img src = "http://horticulture.tg.nic.in/img/work-in-progress-wip.jpg" width=220 height=200>
