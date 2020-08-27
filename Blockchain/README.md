@@ -82,5 +82,4 @@ Steps:
 14. BG ==> calls (GET) /replace_chain ==> updates the chain to the new chain from JB.  
 15. EM ==> calls (GET) /replace_chain ==> updates the chain to the new chain from JB.  
 
-**!!_Documentation in progress_!!**   
-<img src = "http://horticulture.tg.nic.in/img/work-in-progress-wip.jpg" width=220 height=200>
+
