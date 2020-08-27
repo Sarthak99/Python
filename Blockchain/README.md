@@ -1,5 +1,5 @@
 **Welcome to the Blockchain project !!**  
-This project has the basic components of [building a blockchain](https://github.com/Sarthak99/Python/blob/master/Blockchain/blockchain.py)  in python, creating an [hypothetical cryptocurrency](https://github.com/Sarthak99/Python/blob/master/Blockchain/satocoins.py) and [smart contracts]() in a blockchain.
+This project has the basic components of [building a blockchain](https://github.com/Sarthak99/Python/blob/master/Blockchain/blockchain.py)  in python and creating an [hypothetical cryptocurrency](https://github.com/Sarthak99/Python/blob/master/Blockchain/satocoins.py) in a blockchain.
 
 ***
 
@@ -37,7 +37,7 @@ The [endpoints/interfaces](https://github.com/Sarthak99/Python/blob/f98622e1be38
 ### Create a crytpocurrency
 To build a crypto, we need a minimal valid blockchain as an underlying implementation. Next we would create some transactions like sending tokens between different users. Each of these trx would come with some mining rewards in terms of the same crypto for the miner. The most important implementation of a crypto is to make it a [decentralized network](https://en.wikipedia.org/wiki/Decentralization) with P2P communications.  
 An hypothetical cryptocurrency by the name "satocoins" has been demonstrated here. Also here I will illustrate how some of the tech elites such as Bill Gates, Elon Musk and Jeff Bezos would be transacting these crypto among themselves. The actual implementation can be found [here](https://github.com/Sarthak99/Python/blob/master/Blockchain/satocoins.py).  Apart from the above implemented blockchain, let'sgo through some of the extra fragments of the crypto.  
-* [add_transaction](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L90-L98) method adds some transcations to the mempool. These are the transcations that need to be mined to the blockchain later to be confirmed as a completed trx. Transaction template is listed [here](https://github.com/Sarthak99/Python/blob/master/Blockchain/templates/transaction_template.json).  A transaction to be posted would look like this.   
+* [add_transaction(/add_transaction)](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L90-L98) method adds some transcations to the mempool. These are the transcations that need to be mined to the blockchain later to be confirmed as a completed trx. Transaction template is listed [here](https://github.com/Sarthak99/Python/blob/master/Blockchain/templates/transaction_template.json).  A transaction to be posted would look like this.   
 ``` 
  {  
   "sender":"Bill Gates",  
@@ -45,7 +45,7 @@ An hypothetical cryptocurrency by the name "satocoins" has been demonstrated her
   "amount":10000  
  }  
 ```  
-* [add_node](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L100-L103) method is responsible for adding new users into the P2P network.[Node template.](https://github.com/Sarthak99/Python/blob/master/Blockchain/templates/nodes_template.json)  
+* [add_node(/connect_node)](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L100-L103) method is responsible for adding new users into the P2P network.[Node template.](https://github.com/Sarthak99/Python/blob/master/Blockchain/templates/nodes_template.json)  
 ```
 {  
  "nodes":["http://127.0.70.1:5005",  
@@ -63,8 +63,8 @@ An hypothetical cryptocurrency by the name "satocoins" has been demonstrated her
 To simulate this crypto implementation we need to create 3 copies of the code and run them in parallel. This would simulate as 3 different users of the network.  
 Next we would be changing the below snippets to treat them as [different users](https://github.com/Sarthak99/Python/tree/master/Blockchain/DemoObjects).
 * [running port](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L219) to something unqiue to indicate as a new node in the network.  
-* [miner identity]https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L149) to award tokens to the miner of a block.  
-Once the above changes have been made, run the 3 python files in IDE or through command line. For ease of use and better visual [POSTMAN](https://www.postman.com/) can be used for the APIs. The steps of running through the demo can be viewed [here]().
+* [miner identity](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L149) to award tokens to the miner of a block.  
+Once the above changes have been made, run the 3 python files in IDE or through command line. For ease of use and better visual, [POSTMAN](https://www.postman.com/) can be used for the APIs. The steps of running through the demo can be viewed [here]().
 Steps:  
 1. BG ==> calls (GET) /get_chain ==> returns a blockchain with only the genesis block.  
 2. BG ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
