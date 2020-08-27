@@ -64,7 +64,7 @@ To simulate this crypto implementation we need to create 3 copies of the code an
 Next we would be changing the below snippets to treat them as [different users](https://github.com/Sarthak99/Python/tree/master/Blockchain/DemoObjects).
 * [running port](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L219) to something unqiue to indicate as a new node in the network.  
 * [miner identity](https://github.com/Sarthak99/Python/blob/0c0dc85b1a1501c4a838d732ce8cca660fdcb689/Blockchain/satocoins.py#L149) to award tokens to the miner of a block.  
-Once the above changes have been made, run the 3 python files in IDE or through command line. For ease of use and better visual, [POSTMAN](https://www.postman.com/) can be used for the APIs. The steps of running through the demo can be viewed [here]().
+Once the above changes have been made, run the 3 python files in IDE or through command line. For ease of use and better visual, [POSTMAN](https://www.postman.com/) can be used for the APIs. The steps of running through the demo can be viewed [here](https://youtu.be/WD98XkiEYH0).
 Steps:  
 1. BG ==> calls (GET) /get_chain ==> returns a blockchain with only the genesis block.  
 2. BG ==> calls (POST) /connect_node with data (excluding self node) ==> to add peers to it's own network.  
