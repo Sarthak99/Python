@@ -1,4 +1,3 @@
-@@ -1,220 +0,0 @@
 #Creating a CrytpoCurrency "satocoins"
 
 #Install flask: pip install Flask
@@ -72,7 +71,6 @@ class BlockChain:
 
 # Verify every link in the chain is valid and the current block has a valid proof.
     def is_chain_valid(self, chain):
-        print("call at is is_chain_valid:", len(chain))
         previous_block = chain[0]
         block_index = 1
         while block_index < len(chain):
